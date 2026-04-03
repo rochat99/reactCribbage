@@ -15,3 +15,5 @@ const PlayerSection = ({player}) => {
     )
     
 }
+
+export default PlayerSection;

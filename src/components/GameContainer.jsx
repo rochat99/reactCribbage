@@ -1,6 +1,7 @@
 import React from "react";
 import {useState} from "react";
-import {createDeck, dealCards} from "../logic/deck.js";
+import {createDeck, dealCards} from "../logic/makeShuffleDeck.js";
+import PlayerSection from "./PlayerSection.jsx";
 
 const GameContainer = () => {
 
@@ -34,8 +35,6 @@ const GameContainer = () => {
         setComputerPlayer({...computerPlayer, hand: newComputerHand});
     }
 
-    setGamePhase("discarding");
-
     return (
         <div>
             <PlayerSection player={computerPlayer}/>
@@ -44,3 +43,5 @@ const GameContainer = () => {
         </div>
     );
 };
+
+export default GameContainer;

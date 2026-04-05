@@ -1,4 +1,18 @@
-function createDeck() {
+//Fisher-Yates method to shuffle deck
+function shuffleDeck(deck) {
+
+    for (let i = deck.length - 1; i > 0; i--) {
+        
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    };
+
+    return deck;
+
+};
+
+export function createDeck() {
 
     //create arrays to hold deck, ranks and suits 
     const deck = [];
@@ -30,28 +44,16 @@ function createDeck() {
                 suit: s,
                 id: r + s,
                 value: cardValue,
-                order: cardorder
+                order: cardOrder
             });
         };
     };
 
+    shuffleDeck(deck);
+
     return deck;
 
 }
-
-//shuffle deck using Fisher-Yates method
-function shuffleDeck(deck) {
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    };
-
-    return deck;
-
-};
 
 export function dealCards(deck, count) {
     return deck.splice(0, count);

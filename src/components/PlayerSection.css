@@ -1,0 +1,12 @@
+.hidden {
+    background-color: black;
+    width: 100px;
+}
+
+.selected {
+    font-weight: 800;
+}
+
+.card {
+    cursor: pointer;
+}

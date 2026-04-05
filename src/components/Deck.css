@@ -1,0 +1,11 @@
+.deck {
+    z-index: 0;
+    background-color: black;
+    width: 100px;
+    aspect-ratio: 1/2;
+}
+
+.starter {
+    z-index: 1;
+    color: white;
+}

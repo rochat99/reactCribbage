@@ -21,7 +21,7 @@ const GameContainer = () => {
     const [tally, setTally] = useState(0);
     const [playArea, setPlayArea] = useState([]);
     const [currentRound, setCurrentRound] = useState(0);
-    const [rounds, setRounds] = useState([[]])
+    const [rounds, setRounds] = useState([[],[],[]]);
 
     const [humanPlayer, setHumanPlayer] = useState({
         name: "You",
@@ -104,8 +104,13 @@ const GameContainer = () => {
         setHumanPlayer({...humanPlayer, hand: humanPlayer.hand.filter(card => !cardSelect.some(c => c.id === card.id))});
 
         setCardSelect([]);
-        setPlayArea([...playArea, {...cardSelect[0], owner: "human"}]);
-        setTally(tally + cardSelect[0].value);
+
+        const newTally = tally + cardSelect[0].value;
+        const newPlayArea = [...playArea, {...cardSelect[0], owner: "human"}];
+
+        setTally(newTally);
+        setPlayArea(newPlayArea);
+        handleRounds(newTally, newPlayArea);
         setTurn("computer");
     }
 
@@ -117,14 +122,30 @@ const GameContainer = () => {
                 const randomIndex = Math.floor(Math.random() * hand.length);
                 const randomCard = hand[randomIndex];
                 const remainingHand = hand.filter(c=> c.id !== randomCard.id);
+                const newTally = tally + randomCard.value;
+                const newPlayArea = [...playArea, {...randomCard, owner: "computer"}]
 
-                setPlayArea([...playArea, {...randomCard, owner: "computer"}]);
+                setPlayArea(newPlayArea);
                 setComputerPlayer({...computerPlayer, hand: remainingHand});
-                setTally(tally + randomCard.value);
+                setTally(newTally);
                 setTurn("human");
+
+                handleRounds(newTally, newPlayArea);
             }
         }, 1000)
     }, [turn, gamePhase]);
+
+    const handleRounds = (newTally, newPlayArea) => {
+        const noPlayableCards = humanPlayer.hand.every(card => card.value + newTally > 31) && computerPlayer.hand.every(card => card.value + newTally > 31);
+
+        if (newTally === 31 || noPlayableCards) {
+            setCurrentRound(currentRound + 1);
+        } else {
+            const newRounds = [...rounds];
+            newRounds[currentRound] = [...newPlayArea];
+            setRounds(newRounds);
+        };
+    }
 
 
     //JSX

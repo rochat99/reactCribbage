@@ -20,6 +20,8 @@ const GameContainer = () => {
     const [turn, setTurn] = useState("computer");
     const [tally, setTally] = useState(0);
     const [playArea, setPlayArea] = useState([]);
+    const [currentRound, setCurrentRound] = useState(0);
+    const [rounds, setRounds] = useState([[]])
 
     const [humanPlayer, setHumanPlayer] = useState({
         name: "You",
@@ -102,7 +104,7 @@ const GameContainer = () => {
         setHumanPlayer({...humanPlayer, hand: humanPlayer.hand.filter(card => !cardSelect.some(c => c.id === card.id))});
 
         setCardSelect([]);
-        setPlayArea([...playArea, cardSelect[0]]);
+        setPlayArea([...playArea, {...cardSelect[0], owner: "human"}]);
         setTally(tally + cardSelect[0].value);
         setTurn("computer");
     }
@@ -116,7 +118,7 @@ const GameContainer = () => {
                 const randomCard = hand[randomIndex];
                 const remainingHand = hand.filter(c=> c.id !== randomCard.id);
 
-                setPlayArea([...playArea, randomCard]);
+                setPlayArea([...playArea, {...randomCard, owner: "computer"}]);
                 setComputerPlayer({...computerPlayer, hand: remainingHand});
                 setTally(tally + randomCard.value);
                 setTurn("human");

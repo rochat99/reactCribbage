@@ -1,11 +1,15 @@
 .deck {
     z-index: 0;
-    background-color: black;
-    width: 100px;
-    aspect-ratio: 1/2;
+    background-color: blue;
+    width: 90px;
+    aspect-ratio: 1/1.5;
+    margin: 30px 0;
+    position: relative;
 }
 
 .starter {
+    position: absolute;
     z-index: 1;
     color: white;
+    top: 55px;
 }

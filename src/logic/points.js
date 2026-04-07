@@ -33,13 +33,10 @@ function peggingSets(newPlayArea) {
     const triple = newPlayArea.slice(-3);
     const doublePair = newPlayArea.slice(-4);
 
-    if (doublePair.every(card => card.rank === lastRank)) {
-        return 12;
-    } else if (triple.every(card => card.rank === lastRank)) {
-        return 6;
-    } else if (pair.every(card => card.rank === lastRank)) {
-        return 2;
-    };
+    if (doublePair.length === 4 && doublePair.every(card => card.rank === lastRank)) return 12;
+    if (triple.length === 3 && triple.every(card => card.rank === lastRank)) return 6;
+    if (pair.length === 2 && pair.every(card => card.rank === lastRank)) return 2;
+
     return 0;
 };
 
@@ -66,8 +63,8 @@ function peggingRun(newPlayArea) {
     return 0;
 };
 
-function lastCard(newPlayArea, humanPlayer, computerPlayer, newTally) {
-    const noPlayableCards = humanPlayer.hand.every(card => card.value + newTally > 31) && computerPlayer.hand.every(card => card.value + newTally > 31);
+function lastCard(newPlayArea, humanHand, computerHand, newTally) {
+    const noPlayableCards = humanHand.every(card => card.value + newTally > 31) && computerHand.every(card => card.value + newTally > 31);
     
     if (noPlayableCards) {
         const lastCardPlayed = newPlayArea[newPlayArea.length - 1];
@@ -79,6 +76,18 @@ function lastCard(newPlayArea, humanPlayer, computerPlayer, newTally) {
     }
     
     return {winner: null, points: 0};
+}
+
+export function peggingCalculation(newTally, newPlayArea, humanHand, computerHand) {
+    const fifteen = peggingFifteenThirtyOne(newTally);
+    const sets = peggingSets(newPlayArea);
+    const run = peggingRun(newPlayArea);
+    const last = lastCard(newPlayArea, humanHand, computerHand, newTally);
+
+    return {
+        points: fifteen + sets + run,
+        lastCard: last
+    };
 }
 
 //COUNTING CALCULATIONS

@@ -4,7 +4,7 @@ const PlayerSection = ({player, cribHand, onCardSelect, selectedCards = []}) => 
 
     return (
         <div className="playerSection">
-            <h1>{player.name}</h1>
+            <h1>{player.name} - {player.score}</h1>
             <p>{player.isDealer ? "Dealer" : null}</p>
             <div className="handCards">
                 {player.hand.map((card) => (

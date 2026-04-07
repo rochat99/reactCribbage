@@ -1,15 +1,36 @@
-.deck {
-    z-index: 0;
-    background-color: blue;
-    width: 90px;
-    aspect-ratio: 1/1.5;
-    margin: 30px 0;
-    position: relative;
+.deckArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.starter {
-    position: absolute;
-    z-index: 1;
-    color: white;
-    top: 55px;
+.deckLabel {
+  font-family: 'Georgia', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a8d5a2;
+}
+
+.deckStack {
+  position: relative;
+  width: 80px;
+  height: 112px;
+}
+
+.deck-card {
+  width: 80px !important;
+  height: 112px !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.starter-card {
+  width: 80px !important;
+  height: 112px !important;
+  position: absolute;
+  top: 0;
+  left: 90px;
 }

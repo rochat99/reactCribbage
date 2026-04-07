@@ -1,12 +1,115 @@
-.hidden {
-    background-color: black;
-    width: 100px;
+.playerSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  gap: 16px;
 }
 
-.selected {
-    font-weight: 800;
+.cribArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
 }
 
-.card {
-    cursor: pointer;
+.cribLabel {
+  font-family: 'Georgia', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a8d5a2;
+}
+
+.cribCards {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.crib-card {
+  width: 60px !important;
+  height: 84px !important;
+  margin-bottom: -74px;
+}
+
+.crib-card:last-child {
+  margin-bottom: 0;
+}
+
+.cribEmpty {
+  display: block;
+  width: 60px;
+  height: 84px;
+  border: 2px dashed rgba(168, 213, 162, 0.3);
+  border-radius: 6px;
+}
+
+.handArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.playerInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.playerName {
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  color: #e8f5e9;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.playerScore {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  color: #ffd700;
+}
+
+.dealerBadge {
+  font-size: 10px;
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.handCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.hand-card {
+  width: 72px !important;
+  height: 100px !important;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.human .hand-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.hand-card.selected {
+  transform: translateY(-12px);
+  box-shadow: 0 0 0 3px #ffd700, 0 8px 20px rgba(0,0,0,0.5);
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import './GameContainer.css';
 
 //import js logic
 import {createDeck, dealCards} from "../logic/makeShuffleDeck.js";
@@ -126,10 +127,8 @@ const GameContainer = () => {
                 
                 if (playableCards.length === 0) {
                     if (goFirst === "computer" || goFirst === "human") {
-                        // both said go, start new round, give go point, reset
-                        setCurrentRound(currentRound + 1);
-                        setTally(0);
                         setGoFirst(null);
+                        // both said go, start new round, give go point, reset
                         setTurn(goFirst === "human" ? "human" : "computer");
                     } else {
                         setGoFirst("computer");
@@ -160,7 +159,14 @@ const GameContainer = () => {
         const noPlayableCards = humanHand.every(card => card.value + newTally > 31) && computerHand.every(card => card.value + newTally > 31);
 
         if (newTally === 31 || noPlayableCards) {
-            setCurrentRound(currentRound + 1);
+            // Save completed round before resetting
+            const newRounds = [...rounds];
+            newRounds[currentRound] = [...newPlayArea];
+            setRounds(newRounds);
+
+            setCurrentRound(prev => prev + 1);
+            setPlayArea([]);
+            setTally(0);
         } else {
             const newRounds = [...rounds];
             newRounds[currentRound] = [...newPlayArea];
@@ -188,8 +194,6 @@ const GameContainer = () => {
     //holding states for turn and who said go first
     const handleGo = () => {
     if (goFirst === "computer") {
-        setCurrentRound(currentRound + 1);
-        setTally(0);
         setGoFirst(null);
         setTurn("computer");
     } else {
@@ -202,19 +206,48 @@ const GameContainer = () => {
 
     //JSX
     return (
-        <div>
-            <PlayerSection player={computerPlayer} cribHand={crib}/>
+        <div className="gameContainer">
 
+            {/* Row 1 - Computer */}
+            <div className="rowComputer">
+            <PlayerSection player={computerPlayer} cribHand={crib} tally={tally} />
+            </div>
+
+            {/* Row 2 - Deck + Play Area */}
+            <div className="rowMiddle">
             <Deck deck={deck} starterCard={starterCard} />
+            <PlayArea cards={playArea} tally={tally} rounds={rounds} currentRound={currentRound} />
+            </div>
 
-            <PlayArea cards={playArea} tally={tally}/>
+            {/* Row 3 - Human */}
+            <div className="rowHuman">
+            <PlayerSection
+                player={humanPlayer}
+                cribHand={crib}
+                onCardSelect={handleCardSelect}
+                selectedCards={cardSelect}
+                tally={tally}
+            />
+            <div className="humanControls">
+                {gamePhase === "dealing" && (
+                <button className="btn btn-primary" onClick={handleDeal}>Deal Cards</button>
+                )}
+                {gamePhase === "discard" && (
+                <button className="btn btn-primary" onClick={handleDiscard} disabled={cardSelect.length < 2}>
+                    Discard to Crib
+                </button>
+                )}
+                {gamePhase === "pegging" && (
+                <button className="btn btn-primary" onClick={handlePlayCard} disabled={cardSelect.length === 0 || !humanCanPlay}>
+                    Play Card
+                </button>
+                )}
+                {gamePhase === "pegging" && (
+                <button className="btn" onClick={handleGo} disabled={humanCanPlay}>Go</button>
+                )}
+            </div>
+            </div>
 
-            <PlayerSection player={humanPlayer} cribHand={crib} onCardSelect={handleCardSelect} selectedCards={cardSelect} />
-
-            {gamePhase === "dealing" && <button onClick={handleDeal}>Deal Cards</button>}
-            {gamePhase === "discard" && <button onClick={handleDiscard} disabled={cardSelect.length < 2}>Discard Into Crib</button>}
-            {gamePhase === "pegging" && <button onClick={handlePlayCard} disabled={cardSelect.length === 0 || !humanCanPlay}>Play Card</button>}
-            {gamePhase === "pegging" && <button onClick={handleGo} disabled={humanCanPlay}>Go</button>}
         </div>
     );
 };

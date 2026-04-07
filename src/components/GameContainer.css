@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gameContainer {
+  display: grid;
+  grid-template-rows: 160px 1fr 220px;
+  height: 100vh;
+  width: 100vw;
+  background-color: #1a5c38;
+  background-image:
+    radial-gradient(ellipse at 50% 50%, #1e6b42 0%, #134a2c 100%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0,0,0,0.03) 10px,
+      rgba(0,0,0,0.03) 20px
+    );
+  font-family: 'Georgia', serif;
+  color: #e8f5e9;
+}
+
+/* Row borders */
+.rowComputer, .rowMiddle, .rowHuman {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+}
+
+/* Row 1 - Computer */
+.rowComputer {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  background: rgba(0,0,0,0.1);
+}
+
+/* Row 2 - Deck + PlayArea */
+.rowMiddle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 20px;
+  gap: 20px;
+  background: rgba(0,0,0,0.15);
+}
+
+/* Row 3 - Human */
+.rowHuman {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  background: rgba(0,0,0,0.05);
+}
+
+.humanControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 12px 22px 108px;
+}
+
+/* Buttons */
+.btn {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.08);
+  color: #e8f5e9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.18);
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: rgba(255, 215, 0, 0.3);
+}
